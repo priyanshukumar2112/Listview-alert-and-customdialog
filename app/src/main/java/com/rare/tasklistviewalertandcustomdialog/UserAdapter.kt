@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.rare.tasklistviewalertandcustomdialog.databinding.StuListBinding
 
-class UserAdapter(var activity: MainActivity, var arraylist : ArrayList<UserModel>) : BaseAdapter(){
+class UserAdapter(var activity: MainActivity, var arraylist: ArrayList<UserModel>, var click: Click) : BaseAdapter(){
     override fun getCount(): Int {
     return arraylist.size
     }
@@ -20,9 +20,16 @@ class UserAdapter(var activity: MainActivity, var arraylist : ArrayList<UserMode
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         val binding = StuListBinding.inflate(activity.layoutInflater)
-        binding.tvName.setText(arraylist[p0].name.toString())
-        binding.tvRollno.setText(arraylist[p0].rollno.toString().toInt())
-        binding.tvPhno.setText(arraylist[p0].phno.toString().toInt())
+
+        binding.tvName.text=arraylist[p0].name
+        binding.tvRollno.text=arraylist[p0].rollno.toString()
+        binding.tvPhno.text=arraylist[p0].phno.toString()
+        binding.btnEdit.setOnClickListener {
+            click.update(p0)
+        }
+        binding.btnDelete.setOnClickListener {
+            click.delete(p0)
+        }
         return binding.root
     }
 }
